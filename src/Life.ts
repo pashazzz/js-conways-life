@@ -1,5 +1,10 @@
 import crypto from 'crypto'
 
+interface cellCoords {
+  row: number,
+  col: number,
+}
+
 export default class Life {
   /**
    * cache stores the generations by SHA256 of their JSON state like the key
@@ -8,66 +13,102 @@ export default class Life {
    private cache: Object
 
   /**
-   * algorithm using to encrypt/decrypt
-   * cacheKey is random string for encrypt/decrypt keys of cache
-   * iv is an initialization vector to encrypt/decrypt
+   * curGen using for generate next generation
+   * options can influence to how generate next gen
    */
-  private algorithm: string
-  private cacheKey: Buffer
-  private iv: Buffer
+  private curGen: number[][]
+  private options: Object
+
+  private mooreNeighborhood: cellCoords[]
 
   constructor() {
     this.cache = {}
-    this.algorithm = 'aes-128-cbc'
-    this.cacheKey = crypto.randomBytes(16)
-    this.iv = crypto.randomBytes(16)
+
+    this.mooreNeighborhood = [
+      {row: -1, col: -1},
+      {row: -1, col: 0},
+      {row: -1, col: 1},
+      {row: 0, col: -1},
+      {row: 0, col: 1},
+      {row: 1, col: -1},
+      {row: 1, col: 0},
+      {row: 1, col: 1},
+    ]
   }
 
-  private addGenToCache(gen: number[][]): string {
-    const cipher = crypto.createCipheriv(
-      this.algorithm,
-      this.cacheKey,
-      this.iv
-    )
-    let checksum = cipher.update(JSON.stringify(gen), 'utf8', 'hex')
-    checksum += cipher.final('hex')
-
-    this.cache[checksum] = this.cache[checksum] ? this.cache[checksum] + 1 : 1
-
-    return checksum
+  private getGenHash(gen: number[][]): string {
+    return crypto.createHash('md5').update(JSON.stringify(gen)).digest('hex')
   }
 
-  private getGenFromCache(genKey: string): number[][] {
-    const decipher = crypto.createDecipheriv(
-      this.algorithm,
-      this.cacheKey,
-      this.iv
-    )
-    let json = decipher.update(genKey, 'hex', 'utf8')
-    json += decipher.final('utf8')
+  private countNeighbours(cellCoords): number {
+    let countNeighbours = 0
+    for (const neighbour of this.mooreNeighborhood) {
+      const row = cellCoords.row + neighbour.row
+      const col = cellCoords.col + neighbour.col
 
-    return JSON.parse(json)
+      // out of field is not needed
+      if (this.curGen[row] && this.curGen[row][col]) {
+        countNeighbours += this.curGen[row][col]
+      }
+    }
+
+    return countNeighbours
+  }
+
+  private determineCellStatus(cellCoords): number {
+    const countNeighbours = this.countNeighbours(cellCoords)
+    let newCellStatus = 0
+    switch (this.curGen[cellCoords.row][cellCoords.col]) {
+      case 0:
+        // life starts only if cell have exact 3 neighbours
+        newCellStatus = countNeighbours === 3 ? 1 : 0
+        break;
+      case 1:
+        // cell still live only have 2 or 3 neighbours
+        newCellStatus = countNeighbours === 2 || countNeighbours === 3 ? 1 : 0
+        break;
+    }
+
+    return newCellStatus
   }
 
   /**
-   * nextGen() is universal generator of next generation.
+   * nextGen() is a generator for next generation.
    * @param gen - generation state in 2xArray of 0 and 1
    * @param options - object with customizing generating
    * @returns the same size of 2xArray like @param gen with next generation
    */
-  public nextGen(gen: number[][], options?: Object): {gen: number[][], prevGenKey: string } {
-    const genKey = this.addGenToCache(gen)
+  public nextGen(gen: number[][], options?: Object): {gen: number[][], prevGenHash: string } {
+    // if already generated and stored in cache return it
+    const genHash = this.getGenHash(gen)
+    if (this.cache[genHash]) {
+      return { gen: this.cache[genHash], prevGenHash: genHash }
+    }
 
-    return {gen: [[]], prevGenKey: genKey}
+    // otherwise
+    this.curGen = gen
+
+    const nextGen = []
+    for (const rowInd in gen) {
+      nextGen.push([])
+      for (const cellInd in gen[rowInd]) {
+        const newCellStatus = this.determineCellStatus({row: Number(rowInd), col: Number(cellInd)})
+        nextGen[rowInd].push(newCellStatus)
+      }
+    }
+
+    this.cache[genHash] = nextGen
+
+    return {gen: nextGen, prevGenHash: genHash}
   }
 
   /**
    * getGen() look into the cache for key. In case it not exists, returns 0x0
-   * Otherwise decrypt the key and returns the generation
+   * Otherwise returns the next generation
    * @param key for cache
    * @returns cached generation in 2xArray format or empty 0x0 field
    */
   public getGen(key: string): number[][] {
-    return this.cache[key] ? this.getGenFromCache(key) : [[]]
+    return this.cache[key] || [[]]
   }
 }

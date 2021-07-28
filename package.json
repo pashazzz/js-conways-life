@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest --env=node --verbose ./tests"
+    "test": "jest --env=node --verbose ./tests",
+    "coverage": "jest --env=node --coverage ./tests"
   },
   "author": "Pavlo Malyshkin",
   "license": "MIT",
@@ -16,3 +17,4 @@
     "typescript": "^4.3.5"
   }
 }
+  
