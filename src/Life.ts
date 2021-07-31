@@ -7,10 +7,16 @@ interface cellCoords {
 
 export default class Life {
   /**
+   * constants for statuses
+   */
+  static readonly STATUS_DEAD = 0
+  static readonly STATUS_ALIVE = 1
+
+  /**
    * cache stores the generations by SHA256 of their JSON state like the key
    * and times of it happened in values
    */
-   private cache: Object
+  private cache: Object
 
   /**
    * curGen using for generate next generation
@@ -59,13 +65,17 @@ export default class Life {
     const countNeighbours = this.countNeighbours(cellCoords)
     let newCellStatus = 0
     switch (this.curGen[cellCoords.row][cellCoords.col]) {
-      case 0:
+      case Life.STATUS_DEAD:
         // life starts only if cell have exact 3 neighbours
-        newCellStatus = countNeighbours === 3 ? 1 : 0
+        newCellStatus = countNeighbours === 3
+          ? Life.STATUS_ALIVE
+          : Life.STATUS_DEAD
         break;
-      case 1:
+      case Life.STATUS_ALIVE:
         // cell still live only have 2 or 3 neighbours
-        newCellStatus = countNeighbours === 2 || countNeighbours === 3 ? 1 : 0
+        newCellStatus = countNeighbours === 2 || countNeighbours === 3
+          ? Life.STATUS_ALIVE
+          : Life.STATUS_DEAD
         break;
     }
 
