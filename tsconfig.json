@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "target": "es2020",
+    "target": "es5",
     "esModuleInterop": true
   },
   "exclude": ["tests"]
