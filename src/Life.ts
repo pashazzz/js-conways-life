@@ -55,7 +55,7 @@ export default class Life {
   }
 
   private async getGenHash(gen: number[][]): Promise<string> {
-    return await this.digestMessage(JSON.stringify(gen))\
+    return await this.digestMessage(JSON.stringify(gen))
   }
 
   private countNeighbours(cellCoords): number {
