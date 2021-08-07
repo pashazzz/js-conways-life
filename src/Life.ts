@@ -1,8 +1,11 @@
-import crypto from 'crypto'
-
 interface cellCoords {
   row: number,
   col: number,
+}
+
+interface nextGenResult {
+  gen: number[][],
+  parentGenHash: string,
 }
 
 export default class Life {
@@ -42,8 +45,17 @@ export default class Life {
     ]
   }
 
-  private getGenHash(gen: number[][]): string {
-    return crypto.createHash('md5').update(JSON.stringify(gen)).digest('hex')
+  // taken from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+  private async digestMessage(message) {
+    const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8);           // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+    return hashHex;
+  }
+
+  private async getGenHash(gen: number[][]): Promise<string> {
+    return await this.digestMessage(JSON.stringify(gen))\
   }
 
   private countNeighbours(cellCoords): number {
@@ -88,11 +100,11 @@ export default class Life {
    * @param options - object with customizing generating
    * @returns the same size of 2xArray like @param gen with next generation
    */
-  public nextGen(gen: number[][], options?: Object): {gen: number[][], prevGenHash: string } {
+  public async nextGen(gen: number[][], options?: Object): Promise<nextGenResult> {
     // if already generated and stored in cache return it
-    const genHash = this.getGenHash(gen)
+    const genHash = await this.getGenHash(gen)
     if (this.cache[genHash]) {
-      return { gen: this.cache[genHash], prevGenHash: genHash }
+      return { gen: this.cache[genHash], parentGenHash: genHash }
     }
 
     // otherwise
@@ -109,7 +121,7 @@ export default class Life {
 
     this.cache[genHash] = nextGen
 
-    return {gen: nextGen, prevGenHash: genHash}
+    return {gen: nextGen, parentGenHash: genHash}
   }
 
   /**

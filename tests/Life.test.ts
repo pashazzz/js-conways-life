@@ -13,20 +13,20 @@ describe('Life', () => {
    * Public methods
    */
   describe('nextGen', () => {
-    it('should return expected generation and hash for cache access', () => {
+    it('should return expected generation and hash for cache access', async () => {
       for (const state of gens) {
-        const nextGen = life.nextGen(state.init)
+        const nextGen = await life.nextGen(state.init)
         
         expect(nextGen).toMatchObject({gen: state.expected})
-        expect(nextGen.prevGenHash.length).toEqual(32)
+        expect(nextGen.parentGenHash.length).toEqual(40)
 
-        generatedHash = generatedHash || nextGen.prevGenHash
+        generatedHash = generatedHash || nextGen.parentGenHash
       }
     })
 
-    it('should return expected generation from cache', () => {
-      const nextGen = life.nextGen(gens[0].init)
-      expect(nextGen).toEqual({gen: gens[0].expected, prevGenHash: generatedHash})
+    it('should return expected generation from cache', async () => {
+      const nextGen = await life.nextGen(gens[0].init)
+      expect(nextGen).toEqual({gen: gens[0].expected, parentGenHash: generatedHash})
     })
   })
 
@@ -51,10 +51,10 @@ describe('Life', () => {
    * but we can use array access ([]) to get at the private members: `life['priv']()
    */
   describe('getGenHash', () => {
-    it("should return md5 hash 'e0412ae31ac56c590b686575eb552a20'", () => {
-      const md5 = life['getGenHash']( [[0,0],[1,1]] )
+    it("should return sha1 hash '029a64e6da9de1c033bb880d1104437df8321eac'", async () => {
+      const sha1 = await life['getGenHash']( [[0,0],[1,1]] )
 
-      expect(md5).toEqual('e0412ae31ac56c590b686575eb552a20')
+      expect(sha1).toEqual('029a64e6da9de1c033bb880d1104437df8321eac')
     })
   })
 })
