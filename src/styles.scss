@@ -1,0 +1,23 @@
+* {
+  font-family: "Tinos";
+}
+.main {
+  display: flex;
+  width: 100%;
+  .section {
+    border: 1px solid #333;
+    height: 100%;
+    padding: 8px;
+    margin-right: 8px;
+    h2 {
+      text-align: center;
+      margin: 8px auto;
+    }
+  }
+}
+
+button {
+  padding: 2px 6px;
+  margin: 8px 2px;
+  font-size: 1.2rem;
+}
