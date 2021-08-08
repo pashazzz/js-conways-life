@@ -1,0 +1,17 @@
+.world {
+  flex-grow: 5;
+  max-width: 75%;
+  .world-row {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap; 
+    .world-cell {
+      flex: 1 0 auto;
+      text-align: center;
+      border: 1px solid #ddd;
+      margin: 1px;
+      align-items: stretch;
+    }
+  }
+}
