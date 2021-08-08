@@ -4,7 +4,7 @@
   "description": "Conway's Game of Life written on JS",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "node buildscript.js",
     "test": "jest --env=./tests/custom-test-env.js --verbose ./tests",
     "coverage": "jest --env=./tests/custom-test-env.js --coverage ./tests"
   },
@@ -13,8 +13,16 @@
   "devDependencies": {
     "@peculiar/webcrypto": "^1.1.7",
     "@types/jest": "^26.0.24",
+    "@types/react": "^17.0.16",
+    "@types/react-dom": "^17.0.9",
+    "esbuild": "^0.12.19",
+    "esbuild-sass-plugin": "^1.4.11",
     "jest": "^27.0.6",
     "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
