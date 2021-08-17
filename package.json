@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node buildscript.js",
+    "watch": "env WATCH=1 node buildscript.js",
     "test": "jest --env=./tests/custom-test-env.js --verbose ./tests",
     "coverage": "jest --env=./tests/custom-test-env.js --coverage ./tests"
   },

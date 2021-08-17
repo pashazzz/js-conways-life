@@ -18,7 +18,7 @@ esbuild
     splitting: true,
     logLevel: "info",
     plugins: [sassPlugin({type: "css",})],
-    watch: true,
+    watch: process.env.WATCH ? true : false,
   })
   .catch((err) => {
     console.error(err);
