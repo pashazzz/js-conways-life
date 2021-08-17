@@ -20,7 +20,7 @@ export interface ISetWorldSize {
 }
 
 const App = () => {
-  const [worldSize, setWorldSize] = useState({x: 4, y:4})
+  const [worldSize, setWorldSize] = useState({x: 10, y:10})
 
   return (<>
     <Header />

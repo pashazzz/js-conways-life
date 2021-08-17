@@ -5,13 +5,24 @@
     width: 100%;
     display: flex;
     justify-content: start;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     .world-cell {
       flex: 1 0 auto;
       text-align: center;
       border: 1px solid #ddd;
-      margin: 1px;
+      margin: 0.5px;
       align-items: stretch;
+      &:after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+      }
+      &.cell-dead {
+        background-color: white;
+      }
+      &.cell-live {
+        background-color: black;
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ import { ISetWorldSize } from '../index'
 import './Sidebar.scss'
 
 const Sidebar: React.FC<ISetWorldSize> = ({ setWorldSize }) => {
-  const minSize = 4
+  const minSize = 10
   const maxSize = 100
   const [width, setWidth] = useState(minSize)
   const [height, setHeight] = useState(minSize)

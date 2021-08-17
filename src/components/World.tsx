@@ -26,7 +26,10 @@ const World: React.FC<IWorldSize> = ({ size }) => {
       {world.map((row, rIndex) => (
         <div key={rIndex} className="world-row">
           {row.map((cell, cIndex) => (
-            <div key={cIndex} className="world-cell">{cell}</div>
+            <div
+              key={cIndex}
+              className={`world-cell ${cell === 0 ? 'cell-dead' : 'cell-live'}`}
+            />
           ))}
         </div>
       ))}
