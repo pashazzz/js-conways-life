@@ -20,6 +20,12 @@ const World: React.FC<IWorldSize> = ({ size }) => {
     setWorld(w)
   }, [size])
 
+  const toggleCellState = (x: number, y: number) => {
+    const newWorldState = [...world]
+    newWorldState[x][y] = world[x][y] === 0 ? 1 : 0
+    setWorld(newWorldState)
+  }
+
   return (
     <div className="section world">
       <h2>World</h2>
@@ -29,6 +35,7 @@ const World: React.FC<IWorldSize> = ({ size }) => {
             <div
               key={cIndex}
               className={`world-cell ${cell === 0 ? 'cell-dead' : 'cell-live'}`}
+              onClick={() => toggleCellState(rIndex, cIndex)}
             />
           ))}
         </div>
