@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { RootState } from '../store'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateState } from '../reducers/World'
 
 import './World.scss'
 
 import { IWorldSize } from '../index'
 
 const World: React.FC<IWorldSize> = ({ size }) => {
-  const [world, setWorld] = useState([[]])
+  const world = useSelector((state: RootState) => state.world.world)
+  const dispatch = useDispatch()
 
   const defaultState = 0
   useEffect(() => {
@@ -17,13 +21,24 @@ const World: React.FC<IWorldSize> = ({ size }) => {
       }
       w.push(row)
     }
-    setWorld(w)
+    dispatch(updateState(w))
   }, [size])
 
   const toggleCellState = (x: number, y: number) => {
-    const newWorldState = [...world]
-    newWorldState[x][y] = world[x][y] === 0 ? 1 : 0
-    setWorld(newWorldState)
+    const newWorldState = []
+    world.forEach((r, rI) => {
+      const row = []
+      r.forEach((c, cI) => {
+        let cell = c
+        if (rI === x && cI === y) {
+          cell = c === 0 ? 1 : 0
+        }
+        row.push(cell)
+      })
+      newWorldState.push(row)
+    })
+
+    dispatch(updateState(newWorldState))
   }
 
   return (

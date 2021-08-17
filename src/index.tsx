@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import ReactDom from 'react-dom'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 import './styles.scss'
 import Header from './components/Header'
@@ -22,13 +24,13 @@ export interface ISetWorldSize {
 const App = () => {
   const [worldSize, setWorldSize] = useState({x: 10, y:10})
 
-  return (<>
+  return (<Provider store={store}>
     <Header />
     <div className="main">
       <World size={worldSize} />
       <Sidebar setWorldSize={setWorldSize}/>
     </div>
-  </>)
+  </Provider>)
 }
 
 ReactDom.render(<App />, document.querySelector('#root'))
