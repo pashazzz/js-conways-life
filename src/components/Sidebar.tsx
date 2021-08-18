@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../hooks'
 
-import { ISetWorldSize } from '../index'
+import { newWorld, updateState } from '../reducers/WorldReducer'
+import Life from '../Life'
 
 import './Sidebar.scss'
 
-const Sidebar: React.FC<ISetWorldSize> = ({ setWorldSize }) => {
+const life = new Life()
+
+const Sidebar: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const world = useAppSelector((state) => state.world)
+
   const minSize = 10
   const maxSize = 100
   const [width, setWidth] = useState(minSize)
@@ -26,7 +33,14 @@ const Sidebar: React.FC<ISetWorldSize> = ({ setWorldSize }) => {
   }
 
   const createNewWorld = () => {
-    setWorldSize({x: width, y: height})
+    dispatch(newWorld({height, width}))
+  }
+
+  const getNextGen = () => {
+    life.nextGen(world.world)
+      .then((result) => {
+        dispatch(updateState(result.gen))
+      })
   }
 
   return (
@@ -56,6 +70,13 @@ const Sidebar: React.FC<ISetWorldSize> = ({ setWorldSize }) => {
       </div>
       <div>
         <button onClick={createNewWorld}>Create new world</button>
+      </div>
+
+      <hr />
+      <h3>Play</h3>
+
+      <div>
+        <button onClick={getNextGen}>Next generation</button>
       </div>
 
     </div>
