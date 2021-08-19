@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface WorldState {
-  world: number[][]
+  world: number[][],
+  isRun: boolean,
 }
 
 interface WorldSize {
@@ -22,6 +23,7 @@ const initialState: WorldState = {
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
   ],
+  isRun: false
 }
 
 export const worldSlice = createSlice({
@@ -46,10 +48,16 @@ export const worldSlice = createSlice({
     updateState: (state, action: PayloadAction<number[][]>) => {
       state.world = action.payload
     },
+    run: (state) => {
+      state.isRun = true
+    },
+    stop: (state) => {
+      state.isRun = false
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { newWorld, updateState } = worldSlice.actions
+export const { newWorld, updateState, run, stop } = worldSlice.actions
 
 export default worldSlice.reducer

@@ -5,13 +5,16 @@ import { updateState } from '../reducers/WorldReducer'
 import './World.scss'
 
 const World: React.FC = () => {
-  const world = useAppSelector((state) => state.world.world)
+  const world = useAppSelector((state) => state.world)
   const dispatch = useAppDispatch()
 
   // on click to cell toggle it state
   const toggleCellState = (x: number, y: number) => {
+    if (world.isRun) {
+      return
+    }
     const newWorldState = []
-    world.forEach((r, rI) => {
+    world.world.forEach((r, rI) => {
       const row = []
       r.forEach((c, cI) => {
         let cell = c
@@ -28,7 +31,7 @@ const World: React.FC = () => {
   return (
     <div className="section world">
       <h2>World</h2>
-      {world.map((row, rIndex) => (
+      {world.world.map((row, rIndex) => (
         <div key={rIndex} className="world-row">
           {row.map((cell, cIndex) => (
             <div

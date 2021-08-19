@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
-import { newWorld, updateState } from '../reducers/WorldReducer'
+import { newWorld, updateState, run, stop } from '../reducers/WorldReducer'
 import Life from '../Life'
 
 import './Sidebar.scss'
@@ -14,8 +14,23 @@ const Sidebar: React.FC = () => {
 
   const minSize = 10
   const maxSize = 100
+
+  const speeds = [
+    2000, // 0
+    1750, // 1
+    1500, // 2
+    1200, // 3
+    1000, // 4
+    750, // 5
+    500, // 6
+    200, // 7
+    100, // 8
+  ]
+
   const [width, setWidth] = useState(minSize)
   const [height, setHeight] = useState(minSize)
+  const [speed, setSpeed] = useState(4)
+  const [loop, setLoop] = useState(0)
 
   const changeSize = (e) => {
     let val = Math.round(e.target.value)
@@ -43,6 +58,26 @@ const Sidebar: React.FC = () => {
       })
   }
 
+  const decSpeed = () => {
+    if (speed > 0) {
+      setSpeed(speed - 1)
+    }
+  }
+  const incSpeed = () => {
+    if (speed < speeds.length - 1) {
+      setSpeed(speed + 1)
+    }
+  }
+
+  useEffect(() => {
+    clearInterval(loop)
+    if (world.isRun) {
+      setLoop(Number(setInterval(getNextGen, speeds[speed])))
+    } else {
+      clearInterval(loop)
+    }
+  }, [, speed, world])
+
   return (
     <div className="section sidebar">
       <h2>Options</h2>
@@ -69,14 +104,26 @@ const Sidebar: React.FC = () => {
         />
       </div>
       <div>
-        <button onClick={createNewWorld}>Create new world</button>
+        <button disabled={world.isRun} onClick={createNewWorld}>Create new world</button>
       </div>
 
       <hr />
       <h3>Play</h3>
 
       <div>
-        <button onClick={getNextGen}>Next generation</button>
+        <button disabled={world.isRun} onClick={getNextGen}>Next generation</button>
+      </div>
+
+      <div>
+        <div>Speed:</div>
+        <button disabled={speed === 0} onClick={decSpeed}> v Slower</button>
+        <span> {speeds[speed] / 1000}s/generation </span>
+        <button disabled={speed === speeds.length - 1} onClick={incSpeed}> ^ Faster</button>
+      </div>
+
+      <div>
+        <button disabled={world.isRun} onClick={() => dispatch(run())}> {'>'} Start</button>
+        <button disabled={!world.isRun} onClick={() => dispatch(stop())}> || Stop</button>
       </div>
 
     </div>
