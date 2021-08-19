@@ -20,10 +20,12 @@
 
 .light {
   .header {
-    background: #eee;
+    background: #ccc;
     .theme-changer {
+      background-color: #444;
+      color: #ccc;
       &:hover {
-        color: #333;
+        color: #aaa;
       };
     }
   }
@@ -32,8 +34,10 @@
   .header {
     background: #333;
     .theme-changer {
+      background-color: #ccc;
+      color: #444;
       &:hover {
-        color: #ccc;
+        color: #000;
       };
     }
   }

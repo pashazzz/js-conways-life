@@ -126,21 +126,34 @@ const Sidebar: React.FC = () => {
       <hr />
       <h3>Play</h3>
 
+      {/** Main control buttons */}
       <div>
-        <button disabled={world.isRun} onClick={getNextGen}>Next generation</button>
-        <button disabled={world.isRun || history.length === 0} onClick={getPrevGen}>Prev generation</button>
+        <button
+          disabled={world.isRun}
+          onClick={() => dispatch(run())}
+          className="btn-lg"
+        >
+          {'>'} Start
+        </button>
+        <button
+          disabled={!world.isRun}
+          onClick={() => dispatch(stop())}
+          className="btn-lg"
+        >
+           || Stop
+        </button>
       </div>
-
       <div>
         <div>Speed:</div>
-        <button disabled={speed === 0} onClick={decSpeed}> v Slower</button>
-        <span> {speeds[speed] / 1000}s/generation </span>
         <button disabled={speed === speeds.length - 1} onClick={incSpeed}> ^ Faster</button>
+        <span> {speeds[speed] / 1000}s/generation </span>
+        <button disabled={speed === 0} onClick={decSpeed}> v Slower</button>
       </div>
 
-      <div>
-        <button disabled={world.isRun} onClick={() => dispatch(run())}> {'>'} Start</button>
-        <button disabled={!world.isRun} onClick={() => dispatch(stop())}> || Stop</button>
+      {/** Step by step buttons */}
+      <div style={{ marginTop: 12 }}>
+        <button disabled={world.isRun} onClick={getNextGen}>Next generation</button>
+        <button disabled={world.isRun || history.length === 0} onClick={getPrevGen}>Prev generation</button>
       </div>
 
     </div>

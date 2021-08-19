@@ -48,7 +48,7 @@ export default class Life {
   // taken from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
   private async digestMessage(message) {
     const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
-    const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8);           // hash the message
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8);             // hash the message
     const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
     return hashHex;
@@ -73,10 +73,10 @@ export default class Life {
     return countNeighbours
   }
 
-  private determineCellStatus(cellCoords): number {
-    const countNeighbours = this.countNeighbours(cellCoords)
+  private determineCellStatus(coords: cellCoords): number {
+    const countNeighbours = this.countNeighbours(coords)
     let newCellStatus = 0
-    switch (this.curGen[cellCoords.row][cellCoords.col]) {
+    switch (this.curGen[coords.row][coords.col]) {
       case Life.STATUS_DEAD:
         // life starts only if cell have exact 3 neighbours
         newCellStatus = countNeighbours === 3
