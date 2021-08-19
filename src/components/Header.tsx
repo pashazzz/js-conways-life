@@ -14,7 +14,7 @@ const Header = () => {
         <span className="author">by Pavlo Malyshkin @2021</span>
       </span>
       <span className="theme-changer" onClick={() => dispatch(changeSiteTheme())}>
-        {settings.theme.class === 'light' ? 'Dark' : 'Light'} theme
+        {settings.theme.class === 'light' ? '\u263E Dark' : '\u263C Light'} theme
       </span>
       <div style={{ clear: 'both' }} />
     </header>

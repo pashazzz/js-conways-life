@@ -133,21 +133,21 @@ const Sidebar: React.FC = () => {
           onClick={() => dispatch(run())}
           className="btn-lg"
         >
-          {'>'} Start
+          &#9654; Start
         </button>
         <button
           disabled={!world.isRun}
           onClick={() => dispatch(stop())}
           className="btn-lg"
         >
-           || Stop
+           &#10074;&#10074; Stop
         </button>
       </div>
       <div>
         <div>Speed:</div>
-        <button disabled={speed === speeds.length - 1} onClick={incSpeed}> ^ Faster</button>
+        <button disabled={speed === speeds.length - 1} onClick={incSpeed}> &#9650; Faster</button>
         <span> {speeds[speed] / 1000}s/generation </span>
-        <button disabled={speed === 0} onClick={decSpeed}> v Slower</button>
+        <button disabled={speed === 0} onClick={decSpeed}> &#9660; Slower</button>
       </div>
 
       {/** Step by step buttons */}
