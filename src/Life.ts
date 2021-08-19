@@ -98,7 +98,7 @@ export default class Life {
    * nextGen() is a generator for next generation.
    * @param gen - generation state in 2xArray of 0 and 1
    * @param options - object with customizing generating
-   * @returns the same size of 2xArray like @param gen with next generation
+   * @returns the same size of 2xArray like @param gen with next generation and hash of prev gen
    */
   public async nextGen(gen: number[][], options?: Object): Promise<nextGenResult> {
     // if already generated and stored in cache return it

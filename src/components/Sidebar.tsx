@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import _ from 'lodash'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
 import { newWorld, updateState, run, stop } from '../reducers/WorldReducer'
@@ -30,7 +31,11 @@ const Sidebar: React.FC = () => {
   const [width, setWidth] = useState(minSize)
   const [height, setHeight] = useState(minSize)
   const [speed, setSpeed] = useState(4)
-  const [loop, setLoop] = useState(0)
+
+  // loop stores the id of setInterval()
+  const [loopId, setLoopId] = useState(0)
+  // history stores the prev world`s states
+  const [history, setHistory] = useState([])
 
   const changeSize = (e) => {
     let val = Math.round(e.target.value)
@@ -49,13 +54,24 @@ const Sidebar: React.FC = () => {
 
   const createNewWorld = () => {
     dispatch(newWorld({height, width}))
+    setHistory([])
   }
 
   const getNextGen = () => {
+    const lastState = history[history.length - 1]
+    if (!_.isEqual(lastState, world.world)) {
+      setHistory([...history, world.world])
+    }
     life.nextGen(world.world)
       .then((result) => {
         dispatch(updateState(result.gen))
       })
+  }
+
+  const getPrevGen = () => {
+    const prevState = history[history.length - 1]
+    dispatch(updateState(prevState))
+    setHistory(history.slice(0, history.length - 1))
   }
 
   const decSpeed = () => {
@@ -70,11 +86,11 @@ const Sidebar: React.FC = () => {
   }
 
   useEffect(() => {
-    clearInterval(loop)
+    clearInterval(loopId)
     if (world.isRun) {
-      setLoop(Number(setInterval(getNextGen, speeds[speed])))
+      setLoopId(Number(setInterval(getNextGen, speeds[speed])))
     } else {
-      clearInterval(loop)
+      clearInterval(loopId)
     }
   }, [, speed, world])
 
@@ -112,6 +128,7 @@ const Sidebar: React.FC = () => {
 
       <div>
         <button disabled={world.isRun} onClick={getNextGen}>Next generation</button>
+        <button disabled={world.isRun || history.length === 0} onClick={getPrevGen}>Prev generation</button>
       </div>
 
       <div>
