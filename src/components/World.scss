@@ -9,7 +9,7 @@
     .world-cell {
       flex: 1 0 auto;
       text-align: center;
-      border: 1px solid #ddd;
+      border: 1px solid;
       margin: 0.5px;
       align-items: stretch;
       cursor: pointer;
@@ -18,12 +18,29 @@
         display: block;
         padding-bottom: 100%;
       }
-      &.cell-dead {
-        background-color: white;
-      }
-      &.cell-live {
-        background-color: black;
-      }
+    }
+  }
+}
+
+.light {
+  .world .world-row .world-cell {
+    border-color: #ddd;
+    &.cell-dead {
+      background-color: white;
+    }
+    &.cell-live {
+      background-color: black;
+    }
+  }
+}
+.dark {
+  .world .world-row .world-cell {
+    border-color: #ddd;
+    &.cell-dead {
+      background-color: #111;
+    }
+    &.cell-live {
+      background-color: #eee;
     }
   }
 }

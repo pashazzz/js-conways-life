@@ -1,5 +1,4 @@
 .header {
-  background: #eee;
   padding: 12px 6px;
   margin-bottom: 6px;
   .title {
@@ -7,6 +6,35 @@
     .author {
       font-size: 14px;
       padding-left: 16px;
+    }
+  }
+  .theme-changer {
+    margin: 0 12px;
+    float: right;
+    cursor: pointer;
+    border: 1px solid #666;
+    border-radius: 6px;
+    padding: 12px;
+  }
+}
+
+.light {
+  .header {
+    background: #eee;
+    .theme-changer {
+      &:hover {
+        color: #333;
+      };
+    }
+  }
+}
+.dark {
+  .header {
+    background: #333;
+    .theme-changer {
+      &:hover {
+        color: #ccc;
+      };
     }
   }
 }

@@ -1,11 +1,17 @@
 * {
   font-family: "Tinos";
 }
+body {
+  margin: 0;
+}
+.app {
+  padding: 8px;
+}
 .main {
   display: flex;
   width: 100%;
   .section {
-    border: 1px solid #333;
+    border: 1px solid;
     height: 100%;
     padding: 8px;
     margin-right: 8px;
@@ -20,4 +26,36 @@ button {
   padding: 2px 6px;
   margin: 8px 2px;
   font-size: 1.2rem;
+  cursor: pointer;
+  &:disabled {
+    cursor: auto;
+  }
+}
+
+.light {
+  color: black;
+  .main .section {
+    border-color: #333;
+  }
+}
+
+.dark {
+  background-color: #222;
+  color: #ddd;
+  .main .section {
+    border-color: #ccc;
+  }
+  button {
+    background-color: #222;
+    color: #eee;
+    border-color: #ccc;
+    &:disabled {
+      border-color: #444;
+    }
+  }
+  input {
+    background-color: #222;
+    color: #eee;
+    border-color: #ccc;
+  }
 }

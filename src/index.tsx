@@ -1,22 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
 import { store } from './store'
 
 import './styles.scss'
-import Header from './components/Header'
-import World from './components/World'
-import Sidebar from './components/Sidebar'
+import App from './App'
 
-const App = () => {
-
-  return (<Provider store={store}>
-    <Header />
-    <div className="main">
-      <World />
-      <Sidebar />
-    </div>
-  </Provider>)
+const Main = () => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
 }
 
-ReactDom.render(<App />, document.querySelector('#root'))
+ReactDom.render(<Main />, document.querySelector('#root'))
