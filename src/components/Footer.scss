@@ -1,0 +1,8 @@
+footer {
+  margin: 12px 0 8px;
+  @media screen and (max-width: 414px) {
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}

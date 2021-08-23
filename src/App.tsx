@@ -5,6 +5,7 @@ import './styles.scss'
 import Header from './components/Header'
 import World from './components/World'
 import Sidebar from './components/Sidebar'
+import Footer from './components/Footer'
 
 const App = () => {
   const settings = useAppSelector((state) => state.settings)
@@ -16,6 +17,7 @@ const App = () => {
         <World />
         <Sidebar />
       </div>
+      <Footer />
     </div>
   )
 }
