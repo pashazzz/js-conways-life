@@ -1,11 +1,18 @@
 .sidebar {
   flex-grow: 1;
   max-width: 25%;
+  @media screen and (max-width: 414px) {
+    order: 1;
+    max-width: 100%;
+  }
   .input-size {
     width: 48px;
     margin-right: 12px;
   }
   .btn-lg {
     padding: 8px 16px;
+    @media screen and (max-width: 414px) {
+      padding: 4px 12px;
+    }
   }
 }

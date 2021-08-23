@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
   const world = useAppSelector((state) => state.world)
 
   const minSize = 10
-  const maxSize = 100
+  const maxSize = window.innerWidth <= 414 ? 40 : 80
 
   const speeds = [
     2000, // 0
@@ -144,9 +144,8 @@ const Sidebar: React.FC = () => {
         </button>
       </div>
       <div>
-        <div>Speed:</div>
+        <div><b>Speed:</b> <span> {speeds[speed] / 1000}s/generation </span></div>
         <button disabled={speed === speeds.length - 1} onClick={incSpeed}> &#9650; Faster</button>
-        <span> {speeds[speed] / 1000}s/generation </span>
         <button disabled={speed === 0} onClick={decSpeed}> &#9660; Slower</button>
       </div>
 

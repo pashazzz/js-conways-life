@@ -1,22 +1,38 @@
 .world {
   flex-grow: 5;
   max-width: 75%;
+  @media screen and (max-width: 414px) {
+    order: 2;
+    max-width: 100%;
+  }
   .world-row {
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    display: table-row;
+    @media screen and (min-width: 415px) {
+      width: 100%;
+      display: flex;
+      justify-content: start;
+      flex-wrap: wrap;
+    }
     .world-cell {
-      flex: 1 0 auto;
-      text-align: center;
       border: 1px solid;
       margin: 0.5px;
-      align-items: stretch;
       cursor: pointer;
-      &:after {
-        content: '';
-        display: block;
-        padding-bottom: 100%;
+      @media screen and (max-width: 414px) {
+        display: table-cell;
+        width: 10px;
+        height: 10px;
+      }
+      @media screen and (min-width: 415px) {
+        flex: 1 0 auto;
+        text-align: center;
+        align-items: stretch;
+        &:after {
+          content: '';
+          display: block;
+          padding-bottom: 100%;
+        }
       }
     }
   }
@@ -35,7 +51,7 @@
 }
 .dark {
   .world .world-row .world-cell {
-    border-color: #ddd;
+    border-color: #333;
     &.cell-dead {
       background-color: #111;
     }
