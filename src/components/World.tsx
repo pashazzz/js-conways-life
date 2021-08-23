@@ -6,6 +6,7 @@ import './World.scss'
 
 const World: React.FC = () => {
   const world = useAppSelector((state) => state.world)
+  const t = useAppSelector((state) => state.settings.translation)
   const dispatch = useAppDispatch()
 
   // on click to cell toggle it state
@@ -30,7 +31,7 @@ const World: React.FC = () => {
 
   return (
     <div className="section world">
-      <h2>World</h2>
+      <h2>{t['World']['title']}</h2>
       {world.world.map((row, rIndex) => (
         <div key={rIndex} className="world-row">
           {row.map((cell, cIndex) => (

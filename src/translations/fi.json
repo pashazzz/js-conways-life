@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "title": "Conwayn Life-peli",
+    "author": "kirjoittanut Pavlo Malyshkin @2021",
+    "dark": "Tumma teema",
+    "light": "Vaalea teema"
+  },
+  "World": {
+    "title": "Maailma"
+  },
+  "Sidebar": {
+    "title": "Vaihtoehtoja",
+    "create": {
+      "title": "Luo maailma",
+      "width": "Leveys",
+      "height": "Korkeus",
+      "btn": "Luo maailma"
+    },
+    "play": {
+      "title": "Pelata",
+      "startBtn": "Aloittaa",
+      "stopBtn": "Pysähtyä",
+      "speed": "Nopeus",
+      "speedCaption": "s/sukupolvi",
+      "faster": "Nopeammin",
+      "slower": "Hitaammin",
+      "next": "Seuraava sukupolvi",
+      "prev": "Edellinen sukupolvi"
+    }
+  },
+  "Footer": {
+    "moreInfo": "Lisätietoja Conwayn Life-peli löydät sivulta",
+    "wikiLink": "https://fi.wikipedia.org/wiki/Life-peli",
+    "myGithub": "Voit katsoa minun sivu"
+  }
+}

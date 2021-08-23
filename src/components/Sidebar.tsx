@@ -12,6 +12,7 @@ const life = new Life()
 const Sidebar: React.FC = () => {
   const dispatch = useAppDispatch()
   const world = useAppSelector((state) => state.world)
+  const t = useAppSelector((state) => state.settings.translation)
 
   const minSize = 10
   const maxSize = window.innerWidth <= 414 ? 40 : 80
@@ -96,11 +97,11 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="section sidebar">
-      <h2>Options</h2>
-      <h3>Create the world</h3>
+      <h2>{t['Sidebar']['title']}</h2>
+      <h3>{t['Sidebar']['create']['title']}</h3>
       
       <div>
-        <label htmlFor="width">Width: </label>
+        <label htmlFor="width">{t['Sidebar']['create']['width']}: </label>
         <input
           id="width"
           className="input-size"
@@ -109,7 +110,7 @@ const Sidebar: React.FC = () => {
           onChange={(e) => setWidth(Number(e.target.value))}
           onBlur={changeSize}
         />
-        <label htmlFor="height">Height: </label>
+        <label htmlFor="height">{t['Sidebar']['create']['height']}: </label>
         <input
           id="height"
           className="input-size"
@@ -120,11 +121,11 @@ const Sidebar: React.FC = () => {
         />
       </div>
       <div>
-        <button disabled={world.isRun} onClick={createNewWorld}>Create new world</button>
+        <button disabled={world.isRun} onClick={createNewWorld}>{t['Sidebar']['create']['btn']}</button>
       </div>
 
       <hr />
-      <h3>Play</h3>
+      <h3>{t['Sidebar']['play']['title']}</h3>
 
       {/** Main control buttons */}
       <div>
@@ -133,26 +134,26 @@ const Sidebar: React.FC = () => {
           onClick={() => dispatch(run())}
           className="btn-lg"
         >
-          &#9654; Start
+          &#9654; {t['Sidebar']['play']['startBtn']}
         </button>
         <button
           disabled={!world.isRun}
           onClick={() => dispatch(stop())}
           className="btn-lg"
         >
-           &#10074;&#10074; Stop
+           &#10074;&#10074; {t['Sidebar']['play']['stopBtn']}
         </button>
       </div>
       <div>
-        <div><b>Speed:</b> <span> {speeds[speed] / 1000}s/generation </span></div>
-        <button disabled={speed === speeds.length - 1} onClick={incSpeed}> &#9650; Faster</button>
-        <button disabled={speed === 0} onClick={decSpeed}> &#9660; Slower</button>
+        <div><b>{t['Sidebar']['play']['speed']}:</b> <span> {speeds[speed] / 1000}{t['Sidebar']['play']['speedCaption']} </span></div>
+        <button disabled={speed === speeds.length - 1} onClick={incSpeed}> &#9650; {t['Sidebar']['play']['faster']}</button>
+        <button disabled={speed === 0} onClick={decSpeed}> &#9660; {t['Sidebar']['play']['slower']}</button>
       </div>
 
       {/** Step by step buttons */}
       <div style={{ marginTop: 12 }}>
-        <button disabled={world.isRun} onClick={getNextGen}>Next generation</button>
-        <button disabled={world.isRun || history.length === 0} onClick={getPrevGen}>Prev generation</button>
+        <button disabled={world.isRun} onClick={getNextGen}>{t['Sidebar']['play']['next']}</button>
+        <button disabled={world.isRun || history.length === 0} onClick={getPrevGen}>{t['Sidebar']['play']['prev']}</button>
       </div>
 
     </div>

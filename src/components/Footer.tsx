@@ -1,12 +1,15 @@
 import React from 'react'
+import { useAppSelector } from '../hooks'
 
 import './Footer.scss'
 
 const Footer = () => {
+  const t = useAppSelector((state) => state.settings.translation)
+
   return (
     <footer className="footer">
-      <p>More information about Conway's Life Game you can find on <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Wikipedia's page</a></p>
-      <p>My GitHub page you can find <a href="https://github.com/pashazzz" target="_blank">here</a></p>
+      <p>{t['Footer']['moreInfo']} <a href={t['Footer']['wikiLink']} target="_blank">Wikipedia</a></p>
+      <p>{t['Footer']['myGithub']} <a href="https://github.com/pashazzz" target="_blank">GitHub</a></p>
     </footer>
   )
 }

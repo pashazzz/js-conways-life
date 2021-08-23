@@ -5,6 +5,7 @@
     "target": "es2020",
     "jsx": "react",
     "module": "commonjs",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */

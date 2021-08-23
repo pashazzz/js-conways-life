@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "title": "Conway's Life Game",
+    "author": "by Pavlo Malyshkin @2021",
+    "dark": "Dark theme",
+    "light": "Light theme"
+  },
+  "World": {
+    "title": "World"
+  },
+  "Sidebar": {
+    "title": "Options",
+    "create": {
+      "title": "Create the world",
+      "width": "Width",
+      "height": "Height",
+      "btn": "Create the world"
+    },
+    "play": {
+      "title": "Play",
+      "startBtn": "Start",
+      "stopBtn": "Stop",
+      "speed": "Speed",
+      "speedCaption": "s/generation",
+      "faster": "Faster",
+      "slower": "Slower",
+      "next": "Next generation",
+      "prev": "Prev generation"
+    }
+  },
+  "Footer": {
+    "moreInfo": "More information about Conway's Life Game you can find on the",
+    "wikiLink": "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life",
+    "myGithub": "You can look at my"
+  }
+}
