@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { getLink } from '../helpers/base64'
 
 export interface WorldState {
   world: number[][],
   isRun: boolean,
+  link: string,
 }
 
 interface WorldSize {
@@ -23,7 +25,8 @@ const initialState: WorldState = {
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
   ],
-  isRun: false
+  isRun: false,
+  link: '',
 }
 
 export const worldSlice = createSlice({
@@ -44,9 +47,11 @@ export const worldSlice = createSlice({
         newWorld.push(row)
       }
       state.world = newWorld
+      state.link = getLink(newWorld)
     },
     updateState: (state, action: PayloadAction<number[][]>) => {
       state.world = action.payload
+      state.link = getLink(action.payload)
     },
     run: (state) => {
       state.isRun = true

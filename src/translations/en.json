@@ -26,6 +26,11 @@
       "slower": "Slower",
       "next": "Next generation",
       "prev": "Prev generation"
+    },
+    "share": {
+      "title": "Share the world",
+      "btn": "Copy the link",
+      "copied": "Copied!"
     }
   },
   "Footer": {

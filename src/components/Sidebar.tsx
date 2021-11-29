@@ -37,6 +37,7 @@ const Sidebar: React.FC = () => {
   const [loopId, setLoopId] = useState(0)
   // history stores the prev world`s states
   const [history, setHistory] = useState([])
+  const [linkMessage, setLinkMessage] = useState('')
 
   const changeSize = (e) => {
     let val = Math.round(e.target.value)
@@ -93,7 +94,15 @@ const Sidebar: React.FC = () => {
     } else {
       clearInterval(loopId)
     }
-  }, [, speed, world])
+  }, [speed, world])
+
+  const generateLink = () => {
+    navigator.clipboard.writeText(world.link)
+    setLinkMessage(t['Sidebar']['share']['copied'])
+    setTimeout(() => {
+      setLinkMessage('')
+    }, 1500)
+  }
 
   return (
     <div className="section sidebar">
@@ -154,6 +163,14 @@ const Sidebar: React.FC = () => {
       <div style={{ marginTop: 12 }}>
         <button disabled={world.isRun} onClick={getNextGen}>{t['Sidebar']['play']['next']}</button>
         <button disabled={world.isRun || history.length === 0} onClick={getPrevGen}>{t['Sidebar']['play']['prev']}</button>
+      </div>
+
+      {/** Share the world */}
+      <hr />
+      <h3>{t['Sidebar']['share']['title']}</h3>
+      <div style={{ marginTop: 12 }}>
+        <button disabled={world.isRun} onClick={generateLink}>&#128279; {t['Sidebar']['share']['btn']}</button>
+        <div className="message">{linkMessage}</div>
       </div>
 
     </div>

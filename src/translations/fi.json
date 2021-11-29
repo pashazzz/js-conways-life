@@ -26,6 +26,11 @@
       "slower": "Hitaammin",
       "next": "Seuraava sukupolvi",
       "prev": "Edellinen sukupolvi"
+    },
+    "share": {
+      "title": "Jaa maailma",
+      "btn": "Kopioi linkki",
+      "copied": "Kopioitu!"
     }
   },
   "Footer": {
